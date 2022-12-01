@@ -11,7 +11,9 @@ public class TagirLock {
     public static void main(String[] args) {
         Runnable action = () -> {
             for (int i = 0; i < 10; i++) {
-                counter++;
+                synchronized (TagirLock.class) {
+                    counter++;
+                }
             }
         };
 
@@ -22,6 +24,6 @@ public class TagirLock {
                 .toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(runnableStream).join();
         executor.shutdown();
-        System.out.println(counter + ";" + Thread.currentThread().getId());
+        System.out.println(counter + ";" + ProcessHandle.current().pid());
     }
 }
