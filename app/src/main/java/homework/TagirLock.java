@@ -1,29 +1,31 @@
 package homework;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.stream.Stream;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TagirLock {
-    private static int counter = 0;
+    private static final AtomicInteger counter = new AtomicInteger(0);
 
-    public static void main(String[] args) {
-        Runnable action = () -> {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        Callable<Void> action2 = () -> {
             for (int i = 0; i < 10; i++) {
                 synchronized (TagirLock.class) {
-                    counter++;
+                    counter.getAndIncrement();
                 }
             }
+            return null;
         };
 
-        ExecutorService executor = Executors.newScheduledThreadPool(10);
-        var runnableStream = Stream.generate(() -> action)
-                .limit(1000)
-                .map(runnable -> CompletableFuture.runAsync(runnable, executor))
-                .toArray(CompletableFuture[]::new);
-        CompletableFuture.allOf(runnableStream).join();
-        executor.shutdown();
+        ExecutorService threadPool = Executors.newFixedThreadPool(10);
+        CompletionService<Void> completionService = new ExecutorCompletionService<>(threadPool);
+
+        for (int i = 0; i < 10; i++) {
+            completionService.submit(action2);
+        }
+
+        completionService.take().get();
+
+        threadPool.shutdown();
         System.out.println(counter + ";" + ProcessHandle.current().pid());
     }
 }
