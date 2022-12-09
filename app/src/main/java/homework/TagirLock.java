@@ -7,25 +7,32 @@ public class TagirLock {
     private static final AtomicInteger counter = new AtomicInteger(0);
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        Callable<Void> action2 = () -> {
+        Callable<Integer> action2 = () -> {
             for (int i = 0; i < 10; i++) {
-                synchronized (TagirLock.class) {
-                    counter.getAndIncrement();
-                }
+                counter.getAndIncrement();
             }
-            return null;
+            return counter.get();
         };
 
         ExecutorService threadPool = Executors.newFixedThreadPool(10);
-        CompletionService<Void> completionService = new ExecutorCompletionService<>(threadPool);
+
+        BlockingQueue<Future<Integer>> queue = new LinkedBlockingQueue<>();
+        CompletionService<Integer> completionService = new ExecutorCompletionService<>(
+                threadPool,
+                queue
+        );
 
         for (int i = 0; i < 10; i++) {
             completionService.submit(action2);
         }
 
-        completionService.take().get();
+        System.out.println(completionService.take().get());
 
         threadPool.shutdown();
         System.out.println(counter + ";" + ProcessHandle.current().pid());
+
+        for (Future<Integer> future : queue) {
+            System.out.println(future + ":" + future.get());
+        }
     }
 }
