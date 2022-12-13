@@ -46,4 +46,22 @@ class MergeIntervalsTest {
                 {1, 4}
         });
     }
+
+    @Test
+    void test4() {
+        assertThat(obj.merge(
+                new int[][]{
+                        {2,3},
+                        {2,2},
+                        {3,3},
+                        {1,3},
+                        {5,7},
+                        {2,2},
+                        {4,6}
+                }
+        )).isEqualTo(new int[][]{
+                {1, 3},
+                {4,7}
+        });
+    }
 }
