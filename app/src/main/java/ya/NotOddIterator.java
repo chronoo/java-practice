@@ -4,31 +4,29 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class NotOddIterator implements Iterator<Integer> {
-    private final int[] nums;
-    private int current = 0;
+    private final Iterator<Integer> iterator;
+    private int current;
 
-    public NotOddIterator(int[] nums) {
-        if (nums == null) throw new IllegalArgumentException("argument is null");
-        this.nums = nums;
+    public NotOddIterator(Iterator<Integer> intIterator) {
+        this.iterator = intIterator;
+        current = -1;
     }
 
     @Override
     public boolean hasNext() {
-        for (int i = current; i < nums.length; i++) {
-            if (nums[i] % 2 == 0) return true;
+        if (current % 2 == 0) return true;
+        while (iterator.hasNext()) {
+            current = iterator.next();
+            if (current % 2 == 0) return true;
         }
         return false;
     }
 
     @Override
     public Integer next() {
-        for (int i = current; i < nums.length; i++) {
-            int currentNum = nums[i];
-            if (currentNum % 2 == 0) {
-                current = i + 1;
-                return currentNum;
-            }
-        }
-        throw new NoSuchElementException();
+        if (!hasNext()) throw new NoSuchElementException();
+        int tmp = current;
+        current = -1;
+        return tmp;
     }
 }
