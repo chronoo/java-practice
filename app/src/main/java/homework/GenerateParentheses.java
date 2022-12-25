@@ -7,19 +7,19 @@ public class GenerateParentheses {
     public List<String> generateParenthesis(int n)
     {
         List<String> result = new ArrayList<>();
-        if (n > 0) generateParenthesisCore("", n, n, result);
+        generate("", result, n, n);
         return result;
     }
 
-    private void generateParenthesisCore(String prefix, int left, int right, List<String> result)
-    {
-        if (left == 0 && right == 0)
-            result.add(prefix);
-        // Has left Parenthesis
-        if (left > 0)
-            generateParenthesisCore(prefix+'(', left-1, right, result);
-        // has more right Parenthesis
-        if (left < right)
-            generateParenthesisCore(prefix+')', left, right-1, result);
+    private void generate(String out, List<String> result, int leftLeft, int leftRight) {
+        if (leftLeft == 0 && leftRight == 0) result.add(out);
+
+        if (leftLeft > 0) {
+            generate(out + "(", result, leftLeft - 1, leftRight);
+        }
+
+        if (leftLeft < leftRight) {
+            generate(out + ")", result, leftLeft, leftRight - 1);
+        }
     }
 }

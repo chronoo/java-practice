@@ -21,4 +21,10 @@ class GenerateParenthesesTest {
         assertThat(obj.generateParenthesis(1))
                 .isEqualTo(List.of("()"));
     }
+
+    @Test
+    void test3() {
+        assertThat(obj.generateParenthesis(0))
+                .isEqualTo(List.of(""));
+    }
 }
