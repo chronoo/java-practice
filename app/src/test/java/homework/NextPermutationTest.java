@@ -21,11 +21,17 @@ class NextPermutationTest {
         assertThat(arr).isEqualTo(new int[]{1, 2, 3});
     }
 
-
     @Test
     void test3() {
         int[] arr = {1,1,5};
         obj.nextPermutation(arr);
         assertThat(arr).isEqualTo(new int[]{1,5,1});
+    }
+
+    @Test
+    void test4() {
+        int[] arr = {1,7,8,9,6};
+        obj.nextPermutation(arr);
+        assertThat(arr).isEqualTo(new int[]{1,7,9,6,8});
     }
 }
