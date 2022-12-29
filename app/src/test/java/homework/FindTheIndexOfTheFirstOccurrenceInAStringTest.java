@@ -17,4 +17,14 @@ class FindTheIndexOfTheFirstOccurrenceInAStringTest {
     void test2() {
         assertThat(obj.strStr("leetcode", "leeto")).isEqualTo(-1);
     }
+
+    @Test
+    void test3() {
+        assertThat(obj.strStr("hello", "ll")).isEqualTo(2);
+    }
+
+    @Test
+    void test4() {
+        assertThat(obj.strStr("mississippi", "issip")).isEqualTo(4);
+    }
 }
