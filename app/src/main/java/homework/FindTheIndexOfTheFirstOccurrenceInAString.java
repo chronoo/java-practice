@@ -2,17 +2,15 @@ package homework;
 
 public class FindTheIndexOfTheFirstOccurrenceInAString {
     public int strStr(String haystack, String needle) {
-        for(int i =0; i < haystack.length(); i++){
-            if(haystack.charAt(i) == needle.charAt(0)){
-                int k = 0;
-                int j = i;
-                while(k < needle.length() && j < haystack.length() && haystack.charAt(j) == needle.charAt(k)){
-                    j++; k++;
-                }
-                if(k == needle.length()) return i;
+        for (int left = 0; left < haystack.length(); left++) {
+            int needleLeft = 0;
+            int haystackPosition = left;
+            while (haystackPosition < haystack.length() && needleLeft < needle.length() && haystack.charAt(haystackPosition) == needle.charAt(needleLeft)){
+                haystackPosition++;
+                needleLeft++;
             }
+            if (needleLeft == needle.length()) return left;
         }
-
         return -1;
     }
 
