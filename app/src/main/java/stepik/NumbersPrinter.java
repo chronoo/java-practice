@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class Main {
+public class NumbersPrinter {
     public static void main(String[] args) {
         LinkedList<Integer> numbers = new LinkedList<>();
         boolean yea = true;
