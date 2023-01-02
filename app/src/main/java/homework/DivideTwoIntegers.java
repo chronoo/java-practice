@@ -2,28 +2,30 @@ package homework;
 
 public class DivideTwoIntegers {
     public int divide(int dividend, int divisor) {
+        if (dividend == divisor) return 1;
         if (dividend == 0) return 0;
         boolean isPositive = isPositive(dividend, divisor);
-        divisor = divisor > 0 ? divisor : -divisor;
-        if (dividend == Integer.MIN_VALUE && divisor == 1) return isPositive ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-        if (dividend == Integer.MAX_VALUE && divisor == 1) return isPositive ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-        dividend = dividend > 0 ? dividend : -dividend;
-        if (dividend < divisor) return 0;
-        int curSumm = divisor;
+        long divisor1 = divisor > 0 ? divisor : -(long) divisor;
+        long dividend1 = dividend > 0 ? dividend : -(long) dividend;
+        if (dividend1 < divisor1) return 0;
+        long curSumm = divisor1;
         int result = 1;
         while (true) {
-            if (curSumm << 1 > dividend || Integer.MAX_VALUE - curSumm < curSumm) {
+            if (curSumm << 1 > dividend1) {
                 break;
             }
             curSumm <<= 1;
             result <<= 1;
         }
         while (true) {
-            if (dividend - curSumm >= divisor) {
-                curSumm += divisor;
+            if (dividend1 - curSumm >= divisor1) {
+                curSumm += divisor1;
                 result++;
             } else break;
         }
+        curSumm = isPositive ? curSumm : -curSumm;
+        if (curSumm > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        if (curSumm < Integer.MIN_VALUE) return Integer.MIN_VALUE;
         return isPositive ? result : -result;
     }
 
