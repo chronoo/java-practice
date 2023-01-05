@@ -3,11 +3,10 @@ package homework;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RomanToIntegerTest {
 
-    private final RomanToInteger obj = new RomanToInteger();
+    private final RomanToIntegerUp obj = new RomanToIntegerUp();
 
     @Test
     void test1() {
