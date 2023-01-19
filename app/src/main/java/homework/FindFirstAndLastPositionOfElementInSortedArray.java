@@ -10,13 +10,11 @@ public class FindFirstAndLastPositionOfElementInSortedArray {
             if (current > target) break;
             if (current == target) {
                 int j = i;
-                boolean isGreat = false;
-                do {
+                while (j < nums.length - 1) {
+                    if (nums[j + 1] > target) break;
                     j++;
-                } while (j < nums.length && nums[j] == target);
-                if (j == nums.length || nums[j] > target)
-                    isGreat = true;
-                return new int[]{i, isGreat ? --j: j};
+                }
+                return new int[]{i, j};
             }
         }
         return new int[]{-1, -1};
