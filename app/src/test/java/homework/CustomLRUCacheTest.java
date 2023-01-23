@@ -18,4 +18,16 @@ class CustomLRUCacheTest {
         assertThat(lRUCache.get(3)).isEqualTo(3);    // return 3
         assertThat(lRUCache.get(4)).isEqualTo(4);    // return 4
     }
+
+    @Test
+    void test2() {
+        CustomLRUCache lRUCache = new CustomLRUCache(2);
+        assertThat(lRUCache.get(2)).isEqualTo(-1);
+        lRUCache.put(2,6);
+        assertThat(lRUCache.get(1)).isEqualTo(-1);
+        lRUCache.put(1, 5);
+        lRUCache.put(1,2);
+        assertThat(lRUCache.get(1)).isEqualTo(2);
+        assertThat(lRUCache.get(2)).isEqualTo(6);
+    }
 }

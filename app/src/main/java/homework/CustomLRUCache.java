@@ -13,7 +13,11 @@ public class CustomLRUCache {
     }
 
     public void put(int key, int value) {
-        if (integers.size() > capacity - 1) {
+        if (map.containsKey(key)) {
+            integers.remove((Integer) key);
+            map.remove(key);
+        }
+        if (map.size() > capacity - 1) {
             Integer removedKey = integers.removeLast();
             map.remove(removedKey);
         }
