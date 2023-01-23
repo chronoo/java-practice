@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LRUCacheTwoTest {
+class CustomLRUCacheTest {
     @Test
     void test() {
-        LRUCacheTwo lRUCache = new LRUCacheTwo(2);
+        CustomLRUCache lRUCache = new CustomLRUCache(2);
         lRUCache.put(1, 1); // cache is {1=1}
         lRUCache.put(2, 2); // cache is {1=1, 2=2}
         assertThat(lRUCache.get(1)).isEqualTo(1);    // return 1
