@@ -8,6 +8,7 @@ public class RemoveDuplicatesFromSortedArray {
                 nums[++currentNumIndex] = nums[i];
             }
         }
+        System.gc();
         return currentNumIndex+1;
     }
 }
