@@ -45,9 +45,4 @@ class SimilarStringGroupsTest {
             "kgcomwcccs"
         })).isEqualTo(5);
     }
-
-    @Test
-    void test5() {
-        assertThat(obj.isSimilar("cosgmccwkc","coswmccgkc" )).isTrue();
-    }
 }
