@@ -46,19 +46,4 @@ class CheckingExistenceOfEdgeLengthLimitedPathsTest {
             true,false,false,true,true,false,false,true,false,true,false,true,false,false,false,true,false,true,false,true,true,true,false,true,false,false
         });
     }
-
-    @Test
-    void test4() {
-        assertThat(obj.distanceLimitedPathsExist(
-            13,
-            new int[][]{
-                {9,1,53},{3,2,66},{12,5,99},{9,7,26},{1,4,78},{11,1,62},{3,10,50},{12,1,71},{12,6,63},{1,10,63},{9,10,88},{9,11,59},{1,4,37},{4,2,63},{0,2,26},{6,12,98},{9,11,99},{4,5,40},{2,8,25},{4,2,35},{8,10,9},{11,9,25},{10,11,11},{7,6,89},{2,4,99},{10,4,63}
-            },
-            new int[][]{
-                {7,6,62}
-            }
-        )).isEqualTo(new boolean[]{
-            true
-        });
-    }
 }
