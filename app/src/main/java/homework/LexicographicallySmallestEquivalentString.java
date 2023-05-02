@@ -1,43 +1,56 @@
 package homework;
 
+import java.util.stream.Collector;
+
 public class LexicographicallySmallestEquivalentString {
     public String smallestEquivalentString(String s1, String s2, String baseStr) {
-        int n = s1.length();
-        DisjointSet ds = new DisjointSet(26);
-        for (int i = 0; i < n; i++) {
-            ds.union(s1.charAt(i) - 'a', s2.charAt(i) - 'a');
+        int length = s1.length();
+        char[] chars1 = s1.toCharArray();
+        char[] chars2 = s2.toCharArray();
+        UnionFind uf = new UnionFind();
+        for (int i = 0; i < length; i++) {
+            uf.union(chars1[i] - 'a', chars2[i] - 'a');
         }
-        StringBuilder res = new StringBuilder();
-        for (int i = 0; i < baseStr.length(); i++) {
-            res.append((char) (ds.findPar(baseStr.charAt(i) - 'a') + 'a'));
-        }
-        return res.toString();
-    }
-}
-
-class DisjointSet {
-    int[] parent;
-
-    public DisjointSet(int n) {
-        parent = new int[n + 1];
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-        }
+        return baseStr.chars()
+            .map(x -> x - 'a')
+            .map(uf::find)
+            .map(x -> x + 'a')
+            .mapToObj(Character::toString)
+            .collect(Collector.of(
+                StringBuilder::new,
+                StringBuilder::append,
+                StringBuilder::append,
+                StringBuilder::toString)
+            );
     }
 
-    int findPar(int node) {
-        if (node == parent[node]) return node;
-        return parent[node] = findPar(parent[node]);
-    }
+    static class UnionFind {
+        int[] parents;
 
-    void union(int u, int v) {
-        int up = findPar(u);
-        int uv = findPar(v);
-        if (up == uv) return;
-        if (up < uv) {
-            parent[uv] = up;
-        } else {
-            parent[up] = uv;
+        public UnionFind() {
+            parents = new int[27];
+            for (int i = 0; i <= 26; i++) {
+                parents[i] = i;
+            }
+        }
+
+        public int find(int target) {
+            if (parents[target] != target) {
+                parents[target] = find(parents[target]);
+            }
+            return parents[target];
+        }
+
+        public void union(int first, int second) {
+            int parent1 = find(first);
+            int parent2 = find(second);
+            if (parent1 != parent2) {
+                if (parent1 < parent2) {
+                    parents[parent2] = parent1;
+                } else {
+                    parents[parent1] = parent2;
+                }
+            }
         }
     }
 }
