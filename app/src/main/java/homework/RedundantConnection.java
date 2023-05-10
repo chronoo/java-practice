@@ -1,31 +1,19 @@
 package homework;
 
-import java.util.Arrays;
-import java.util.IntSummaryStatistics;
-
 public class RedundantConnection {
     public int[] findRedundantConnection(int[][] edges) {
-        IntSummaryStatistics statistics = Arrays.stream(edges)
-            .flatMapToInt(Arrays::stream)
-            .summaryStatistics();
-
-        for (int i = edges.length-1; i >=0; i--) {
-            UnionFind uf = new UnionFind(statistics.getMax());
-            for (int j = 0; j < edges.length; j++) {
-                if (j!=i) {
-                    uf.union(edges[j][0] - 1, edges[j][1] - 1);
-                }
+        UnionFind uf = new UnionFind(edges.length + 1);
+        int[] result = null;
+        for (int[] edge : edges) {
+            int parent1 = uf.find(edge[0]);
+            int parent2 = uf.find(edge[1]);
+            if (parent1 != parent2) {
+                uf.union(edge[0], edge[1]);
+            } else {
+                result = edge;
             }
-            for (int j = 0; j < statistics.getMax(); j++) {
-                uf.parents[j] = uf.find(uf.parents[j]);
-            }
-
-            if (Arrays.stream(uf.parents).distinct().count() == 1) {
-                return edges[i];
-            }
-
         }
-        return null;
+        return result;
     }
 
     class UnionFind {
