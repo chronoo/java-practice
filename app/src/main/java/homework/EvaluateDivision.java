@@ -1,8 +1,6 @@
 package homework;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class EvaluateDivision {
     public double[] calcEquation(
@@ -10,61 +8,73 @@ public class EvaluateDivision {
         double[] values,
         List<List<String>> queries
     ) {
-        List<String> words = equations.stream()
-            .flatMap(Collection::stream)
-            .distinct()
-            .toList();
-        UnionFind uf = new UnionFind(words.size());
-        for (int i = 0; i < equations.size(); i++) {
-            List<String> eq = equations.get(i);
-            double value = values[i];
-            uf.union(words.indexOf(eq.get(0)), words.indexOf(eq.get(1)), value);
-        }
-        int[] parent = uf.parent;
-        for (int j = 0; j < parent.length; j++) {
-            parent[j] = uf.find(parent[j]);
+        double[] res = new double[queries.size()];
+
+        UnionFind uf = new UnionFind();
+        for (int i = 0; i < values.length; i++) {
+            List<String> equation = equations.get(i);
+            uf.union(equation.get(0), equation.get(1), values[i]);
         }
 
-        List<Double> res = new ArrayList<>();
+        int idx = 0;
         for (List<String> query : queries) {
-            int first = words.indexOf(query.get(0));
-            int second = words.indexOf(query.get(1));
-            if (first == -1 || second == -1) {
-                res.add(-1.0);
-            } else {
-                res.add(uf.rank[first] / uf.rank[second]);
-            }
-        }
 
-        return res.stream()
-            .mapToDouble(Double::doubleValue)
-            .toArray();
+            Pair<String, Double> pair0 = uf.find(query.get(0));
+            Pair<String, Double> pair1 = uf.find(query.get(1));
+
+            res[idx] = -1d;
+            if (pair0 != null && pair1 != null && pair0.getKey().equals(pair1.getKey()))
+                res[idx] = pair0.getValue() / pair1.getValue();
+            idx++;
+        }
+        return res;
     }
 
     class UnionFind {
-        int[] parent;
-        double[] rank;
+        Map<String, Pair<String, Double>> data = new HashMap<>();
 
-        UnionFind(int size) {
-            parent = new int[size];
-            rank = new double[size];
-            for (int i = 0; i < size; i++) {
-                parent[i] = i;
-                rank[i] = 1;
+        public Pair<String, Double> find(String x) {
+            if (!data.containsKey(x)) return null;
+
+            Pair<String, Double> group = data.get(x);
+
+            if (!group.getKey().equals(x)) {
+                Pair<String, Double> newGroup = find(group.getKey());
+                group = new Pair<>(newGroup.getKey(), group.getValue() * newGroup.getValue());
+                data.put(x, group);
             }
+            return group;
         }
 
-        int find(int target) {
-            if (parent[target] != target) {
-                parent[target] = find(parent[target]);
-                rank[parent[target]] *=rank[target];
-            }
-            return parent[target];
+        public void union(String x, String y, double value) {
+            data.computeIfAbsent(x, key -> new Pair<>(key, 1d));
+            data.computeIfAbsent(y, key -> new Pair<>(key, 1d));
+
+            Pair<String, Double> groupX = find(x);
+            Pair<String, Double> groupY = find(y);
+
+            if (groupX.getKey().equals(groupY.getKey())) return;
+
+            Pair<String, Double> pair = new Pair<>(groupY.getKey(), value * groupY.getValue() / groupX.getValue());
+            data.put(groupX.getKey(), pair);
+        }
+    }
+
+    class Pair<A, B> {
+        private final A key;
+        private final B value;
+
+        Pair(A key, B value) {
+            this.key = key;
+            this.value = value;
         }
 
-        void union(int first, int second, double koeff) {
-            parent[second] = first;
-            rank[first] = rank[second] * koeff;
+        public A getKey() {
+            return key;
+        }
+
+        public B getValue() {
+            return value;
         }
     }
 }
