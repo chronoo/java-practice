@@ -1,25 +1,17 @@
 package homework;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class NumberOfArithmeticTriplets {
     public int arithmeticTriplets(int[] nums, int diff) {
         int count = 0;
-        for (int i = 0; i < nums.length; i++) {
-            boolean findSecond = false;
-            for (int j = i + 1; j < nums.length; j++) {
-                if (findSecond) break;
-                if (nums[j] > nums[i] + diff) break;
-                if (nums[j] == nums[i] + diff) {
-                    findSecond = true;
-                    for (int k = j+1; k < nums.length; k++) {
-                        if (nums[k] == nums[j] + diff) {
-                            count++;
-                            break;
-                        }
-                    }
-                }
-            }
+        Set<Integer> list = new HashSet<>();
+        for (int a : nums) {
+            if (list.contains(a - diff) && list.contains(a - diff * 2))
+                count++;
+            list.add(a);
         }
-
         return count;
     }
 }
