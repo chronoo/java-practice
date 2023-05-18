@@ -2,12 +2,16 @@ package homework;
 
 public class ReversePrefixOfWord {
     public String reversePrefix(String word, char ch) {
-        int index = word.indexOf(ch) + 1;
-        if (index == 0)
-            return word;
-        return new StringBuilder(word.substring(0, index))
-            .reverse()
-            .append(word.substring(index))
-            .toString();
+        StringBuilder sb = new StringBuilder();
+        boolean finded = false;
+        for (int i = 0; i < word.length(); i++) {
+            char currentChar = word.charAt(i);
+            sb.append(currentChar);
+            if (!finded && currentChar == ch) {
+                sb.reverse();
+                finded = true;
+            }
+        }
+        return sb.toString();
     }
 }
