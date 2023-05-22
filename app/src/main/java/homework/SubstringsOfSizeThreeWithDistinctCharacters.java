@@ -3,8 +3,9 @@ package homework;
 public class SubstringsOfSizeThreeWithDistinctCharacters {
     public int countGoodSubstrings(String s) {
         int count = 0;
-        for (int i = 0; i < s.length() - 2; i++) {
-            if (s.charAt(i) != s.charAt(i+1) && s.charAt(i) != s.charAt(i+2) && s.charAt(i+1) != s.charAt(i+2)) {
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < chars.length - 2; i++) {
+            if (chars[i] != chars[i+1] && chars[i] != chars[i+2] && chars[i+1] != chars[i+2]) {
                 count++;
             }
         }
