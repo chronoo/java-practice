@@ -1,21 +1,18 @@
 package homework;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 public class FindFirstPalindromicStringInTheArray {
     public String firstPalindrome(String[] words) {
-        for (String word : words) {
-            if (isPalindrome(word)) {
-                return word;
-            }
-        }
-        return "";
+        return Arrays.stream(words)
+            .filter(this::isPalindrome)
+            .findFirst()
+            .orElse("");
     }
 
     private boolean isPalindrome(String word) {
-        for (int i = 0; i < word.length() / 2; i++) {
-            if (word.charAt(i) != word.charAt(word.length() - i - 1)) {
-                return false;
-            }
-        }
-        return true;
+        return IntStream.range(0, word.length() / 2)
+            .allMatch(i -> word.charAt(i) == word.charAt(word.length() - i - 1));
     }
 }
