@@ -21,4 +21,11 @@ class NumberOfSubArraysOfSizeKAndAverageGreaterThanOrEqualToThresholdTest {
             11,13,17,23,29,31,7,5,2,3
         }, 3, 5)).isEqualTo(6);
     }
+
+    @Test
+    void test3() {
+        assertThat(obj.numOfSubarrays(new int[]{
+            1,1,1,1,1
+        }, 1, 0)).isEqualTo(5);
+    }
 }
