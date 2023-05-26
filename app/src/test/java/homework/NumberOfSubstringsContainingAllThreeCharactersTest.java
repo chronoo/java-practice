@@ -25,4 +25,10 @@ class NumberOfSubstringsContainingAllThreeCharactersTest {
         assertThat(obj.numberOfSubstrings("abc"))
             .isEqualTo(1);
     }
+
+    @Test
+    void test4() {
+        assertThat(obj.numberOfSubstrings("ababbbc"))
+            .isEqualTo(3);
+    }
 }
