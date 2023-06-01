@@ -2,9 +2,9 @@ package homework;
 
 public class CountNumberOfNiceSubarrays {
     public int numberOfSubarrays(int[] nums, int k) {
-        int i = 0, j = 0, odd = 0, count = 0, res = 0;
-        while (j < nums.length) {
-            if (nums[j] % 2 == 1) {
+        int i = 0, odd = 0, count = 0, res = 0;
+        for (int num : nums) {
+            if (num % 2 == 1) {
                 odd++;
                 count = 0;
             }
@@ -15,7 +15,6 @@ public class CountNumberOfNiceSubarrays {
                 count++;
             }
             res += count;
-            j++;
         }
         return res;
     }
