@@ -8,11 +8,10 @@ public class CountNumberOfNiceSubarrays {
                 odd++;
                 count = 0;
             }
-            while (odd == k) {
-                if (nums[i++] % 2 == 1) {
+            for (; odd == k; i++, count++) {
+                if (nums[i] % 2 == 1) {
                     odd--;
                 }
-                count++;
             }
             res += count;
         }
