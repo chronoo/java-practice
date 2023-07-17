@@ -10,16 +10,16 @@ public class CountAndSay {
     }
 
     private String say(String res) {
-        StringBuilder sb = new StringBuilder();
-        int left = 0, right = 0;
-        while(right < res.length()){
-            while(right<res.length() && res.charAt(left) == res.charAt(right)){
-                right++;
+        StringBuilder result = new StringBuilder();
+        int count = 1;
+        for (int i = 0; i < res.length(); i++) {
+            if (i < res.length() - 1 && res.charAt(i) == res.charAt(i + 1)) {
+                count++;
+            } else {
+                result.append(count).append(res.charAt(i));
+                count = 1;
             }
-            sb.append(right - left);
-            sb.append(res.charAt(left));
-            left = right;
         }
-        return sb.toString();
+        return result.toString();
     }
 }
