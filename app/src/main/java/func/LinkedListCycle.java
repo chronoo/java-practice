@@ -5,12 +5,16 @@ import java.util.Set;
 
 public class LinkedListCycle {
     public boolean hasCycle(ListNode head) {
-        Set<ListNode> has = new HashSet<>();
-        while (head != null) {
-            if (has.contains(head)) return true;
-            has.add(head);
-            head = head.next;
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast)
+                return true;
         }
+
         return false;
     }
 }
