@@ -3,15 +3,11 @@ package func;
 import java.util.Arrays;
 
 public class SingleNumber {
-    public int singleNumber(int[] nums) {
-        Arrays.sort(nums);
-        for (int i = 0; i < nums.length - 1; i++) {
-            int current = nums[i];
-            int next = nums[i + 1];
-            if (current != next &&(i==0 || (nums[i - 1] != current))){
-                return current;
-            }
+    public int singleNumber(int[] n) {
+        int res = n[0];
+        for (int i = 1; i < n.length; i++) {
+            res = res ^ n[i];
         }
-        return nums[nums.length - 1];
+        return res;
     }
 }
