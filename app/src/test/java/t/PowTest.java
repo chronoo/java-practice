@@ -21,4 +21,12 @@ class PowTest {
     void test3() {
         assertThat(obj.myPow(2.00000, -2)).isEqualTo(0.25000);
     }
+    @Test
+    void test4() {
+        assertThat(obj.myPow(2.00000, -2147483648)).isEqualTo(0.0000);
+    }
+    @Test
+    void test5() {
+        assertThat(obj.myPow(-1.00000, 2147483647)).isEqualTo(-1.0000);
+    }
 }
