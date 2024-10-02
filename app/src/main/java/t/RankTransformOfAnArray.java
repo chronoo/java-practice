@@ -8,15 +8,13 @@ import java.util.HashMap;
  */
 public class RankTransformOfAnArray {
     public int[] arrayRankTransform(int[] arr) {
-        var sorted = Arrays.stream(arr).sorted().distinct().boxed().toList();
+        var sorted = Arrays.stream(arr).distinct().sorted().toArray();
         var orderMap = new HashMap<Integer, Integer>();
-        for (int i = 0; i < sorted.size(); i++) {
-            var current = sorted.get(i);
-            orderMap.put(current, i + 1);
+        for (int i = 0; i < sorted.length; i++) {
+            orderMap.put(sorted[i], i + 1);
         }
         for (int i = 0; i < arr.length; i++) {
-            int current = arr[i];
-            arr[i] = orderMap.get(current);
+            arr[i] = orderMap.get(arr[i]);
         }
         return arr;
     }
