@@ -7,17 +7,14 @@ import java.util.HashMap;
  */
 public class TwoSum {
     public int[] twoSum(int[] nums, int target) {
-        var diffMap = new HashMap<Integer, Integer>();
         var indexes = new HashMap<Integer, Integer>();
         for (int i = 0; i < nums.length; i++) {
             int num = nums[i];
-            int diff = target - num;
-            var integer = diffMap.get(diff);
-            if (integer != null) {
-                return new int[]{indexes.get(integer), i};
+            var diff = indexes.get(target - num);
+            if (diff != null) {
+                return new int[]{diff, i};
             }
-            diffMap.put(num, diff);
-            indexes.put(diff, i);
+            indexes.put(num, i);
         }
         throw new IllegalStateException();
     }
