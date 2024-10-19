@@ -1,8 +1,5 @@
 package t;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * https://leetcode.com/problems/find-kth-bit-in-nth-binary-string
  */
