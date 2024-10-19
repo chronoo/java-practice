@@ -54,7 +54,7 @@ tasks.named('test') {
 }
 
 tasks.withType(JavaCompile) {
-    options.release = 17
+    options.release = 21
 }
 
 compileJava.options.encoding = "UTF-8"
