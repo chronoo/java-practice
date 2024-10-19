@@ -8,18 +8,11 @@ import java.util.List;
  */
 public class FindKthBitInNthBinaryString {
     public char findKthBit(int n, int k) {
-        List<Boolean> list = new ArrayList<>();
-        list.add(false);
-        for (int i = 0; i < n; i++) {
-            list = make(list);
-        }
-        return list.get(k - 1) ? '1' : '0';
-    }
-
-    private List<Boolean> make(List<Boolean> list) {
-        List<Boolean> result = new ArrayList<>(list);
-        result.add(true);
-        result.addAll(list.reversed().stream().map(x -> !x).toList());
-        return result;
+        if (n == 1) return '0';
+        var length = (int) Math.pow(2, n) - 1;
+        var mid = length / 2 + 1;
+        if (k == mid) return '1';
+        if (k < mid) return findKthBit(n - 1, k);
+        return findKthBit(n - 1, length - k + 1) == '0' ? '1' : '0';
     }
 }
