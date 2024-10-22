@@ -2,30 +2,33 @@ package t;
 
 import homework.PathSumII.TreeNode;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * https://leetcode.com/problems/kth-largest-sum-in-a-binary-tree
  */
 public class KthLargestSumInABinaryTree {
     public long kthLargestLevelSum(TreeNode root, int k) {
-        Map<Long, Long> sums = new HashMap<>();
-        dep(root, sums, 0);
-        if (k > sums.size()) return -1;
-        return sums.values().stream().sorted().toList().reversed().get(k - 1);
-    }
+        var sums = new PriorityQueue<Long>(Collections.reverseOrder());
+        var queue = new ArrayList<TreeNode>();
+        queue.add(root);
 
-    private void dep(TreeNode root, Map<Long, Long> sums, long level) {
-        sums.put(level, sums.getOrDefault(level, 0L) + root.val);
-        if (root.left == null && root.right == null) {
-            return;
+        while (!queue.isEmpty()) {
+            var newLevel = new ArrayList<TreeNode>();
+            var sum = 0L;
+            for (var treeNode : queue) {
+                sum += treeNode.val;
+                if (treeNode.left != null) newLevel.add(treeNode.left);
+                if (treeNode.right != null) newLevel.add(treeNode.right);
+            }
+            sums.add(sum);
+            queue = newLevel;
         }
-        if (root.left != null) {
-            dep(root.left, sums, level + 1);
+
+        if (sums.size() < k) return -1;
+        for (int i = k - 1; i > 0; i--) {
+            sums.poll();
         }
-        if (root.right != null) {
-            dep(root.right, sums, level + 1);
-        }
+        return sums.peek();
     }
 }
