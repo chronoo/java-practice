@@ -62,5 +62,5 @@ tasks.withType(JavaCompile) {
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
