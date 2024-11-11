@@ -8,19 +8,17 @@ import java.util.HashSet;
 public class HappyNumber {
     public boolean isHappy(int n) {
         var mem = new HashSet<Integer>();
-        int remain = n;
         do {
             var sum = 0;
-            while (remain >= 10) {
-                var div = remain % 10;
+            while (n > 0) {
+                var div = n % 10;
                 sum += div * div;
-                remain /= 10;
+                n /= 10;
             }
-            sum += remain * remain;
             if (sum == 1) return true;
             if (mem.contains(sum)) return false;
             mem.add(sum);
-            remain = sum;
+            n = sum;
         } while (true);
     }
 }
