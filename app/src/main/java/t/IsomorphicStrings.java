@@ -8,9 +8,11 @@ import java.util.HashMap;
 public class IsomorphicStrings {
     public boolean isIsomorphic(String s, String t) {
         var map = new HashMap<Character, Character>();
-        for (int i = 0; i < s.length(); i++) {
-            var curS = s.charAt(i);
-            var curT = t.charAt(i);
+        var sArray = s.toCharArray();
+        var tArray = t.toCharArray();
+        for (int i = 0; i < sArray.length; i++) {
+            var curS = sArray[i];
+            var curT = tArray[i];
             var currentMap = map.get(curS);
             if (currentMap == null) {
                 if (map.containsValue(curT)) return false;
