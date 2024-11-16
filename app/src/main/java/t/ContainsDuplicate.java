@@ -8,9 +8,7 @@ import java.util.HashSet;
 public class ContainsDuplicate {
     public boolean containsDuplicate(int[] nums) {
         var uniqueNums = new HashSet<Integer>();
-        for (int num : nums) {
-            if (!uniqueNums.add(num)) return true;
-        }
-        return false;
+        for (int i = 0; i < nums.length && uniqueNums.add(nums[i]); i++);
+        return uniqueNums.size() != nums.length;
     }
 }
