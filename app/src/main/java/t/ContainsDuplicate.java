@@ -7,10 +7,9 @@ import java.util.HashSet;
  */
 public class ContainsDuplicate {
     public boolean containsDuplicate(int[] nums) {
-        var was = new HashSet<Integer>();
+        var uniqueNums = new HashSet<Integer>();
         for (int num : nums) {
-            if (was.contains(num)) return true;
-            was.add(num);
+            if (!uniqueNums.add(num)) return true;
         }
         return false;
     }
