@@ -1,15 +1,16 @@
 package t;
 
-import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * https://leetcode.com/problems/contains-duplicate
  */
 public class ContainsDuplicate {
     public boolean containsDuplicate(int[] nums) {
-        Arrays.sort(nums);
-        for (int i = 0; i < nums.length - 1; i++) {
-            if (nums[i] == nums[i + 1]) return true;
+        var was = new HashSet<Integer>();
+        for (int num : nums) {
+            if (was.contains(num)) return true;
+            was.add(num);
         }
         return false;
     }
