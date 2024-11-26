@@ -1,16 +1,15 @@
 package t;
 
-import java.util.Arrays;
-
 /**
  * https://leetcode.com/problems/missing-number
  */
 public class MissingNumber {
     public int missingNumber(int[] nums) {
-        Arrays.sort(nums);
-        for (int i = 0; i < nums.length; i++) {
-            if (i != nums[i]) return i;
+        var x = nums.length;
+        var sum = (1 + x) * x / 2;
+        for (int num : nums) {
+            sum -= num;
         }
-        return nums.length;
+        return sum;
     }
 }
