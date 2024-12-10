@@ -9,21 +9,25 @@ import java.util.List;
  * https://leetcode.com/problems/binary-tree-paths
  */
 public class BinaryTreePaths {
+    private final List<String> res = new ArrayList<>();
+    private final StringBuilder sb = new StringBuilder();
+
     public List<String> binaryTreePaths(TreeNode root) {
-        var res = new ArrayList<String>();
-        addPaths(root, res, "");
+        addPaths(root);
         return res;
     }
 
-    private void addPaths(TreeNode root, ArrayList<String> res, String current) {
-        if (root.left != null) {
-            addPaths(root.left, res, current + root.val +"->");
-        }
-        if (root.right != null) {
-            addPaths(root.right, res, current + root.val +"->");
-        }
+    private void addPaths(TreeNode root) {
+        if (root == null) return;
+        var length = sb.length();
+        sb.append(root.val);
         if (root.left == null && root.right == null) {
-            res.add(current + root.val);
+            res.add(sb.toString());
+        } else {
+            sb.append("->");
+            addPaths(root.left);
+            addPaths(root.right);
         }
+        sb.setLength(length);
     }
 }
