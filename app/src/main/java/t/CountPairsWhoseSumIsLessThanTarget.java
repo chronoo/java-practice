@@ -1,5 +1,6 @@
 package t;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -7,15 +8,22 @@ import java.util.List;
  */
 public class CountPairsWhoseSumIsLessThanTarget {
     public int countPairs(List<Integer> nums, int target) {
-        var count = 0;
-        var sorted = nums.stream().sorted().toList();
-        for (var i = 0; i < sorted.size(); i++) {
-            var first = sorted.get(i);
-            for (var j = i + 1; j < sorted.size(); j++) {
-                var second = sorted.get(j);
-                if (first + second < target) count++; else break;
+        var ans = 0;
+        Collections.sort(nums);
+        for (var i = 0; i < nums.size(); i++) {
+            var left = i;
+            var right = nums.size();
+            var current = nums.get(i);
+            while (right - left > 1) {
+                var middle = left + (right - left) / 2;
+                if (nums.get(middle) + current >= target) {
+                    right = middle;
+                } else {
+                    left = middle;
+                }
             }
+            ans += left - i;
         }
-        return count;
+        return ans;
     }
 }
