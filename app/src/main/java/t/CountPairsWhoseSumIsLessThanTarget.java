@@ -12,17 +12,19 @@ public class CountPairsWhoseSumIsLessThanTarget {
         Collections.sort(nums);
         for (var i = 0; i < nums.size(); i++) {
             var left = i;
-            var right = nums.size();
+            var right = nums.size() - 1;
             var current = nums.get(i);
-            while (right - left > 1) {
+            var res = 0;
+            while (left <= right) {
                 var middle = left + (right - left) / 2;
-                if (nums.get(middle) + current >= target) {
-                    right = middle;
+                if (nums.get(middle) + current < target) {
+                    left = middle + 1;
+                    res = middle - i;
                 } else {
-                    left = middle;
+                    right = middle - 1;
                 }
             }
-            ans += left - i;
+            ans += res;
         }
         return ans;
     }
