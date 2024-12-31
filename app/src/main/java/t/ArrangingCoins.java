@@ -5,13 +5,15 @@ package t;
  */
 public class ArrangingCoins {
     public int arrangeCoins(int n) {
-        var res = 0L;
-        var row = 0;
-        while (true) {
-            if (res > n) break;
-            row++;
-            res += row;
+        var left = 0L;
+        var right = (long) n;
+        while (left <= right) {
+            var middle = left + (right - left) / 2;
+            var summ = middle * (middle + 1) / 2;
+            if (summ < n) left = middle + 1;
+            else if (summ > n) right = middle - 1;
+            else return (int) middle;
         }
-        return row - 1;
+        return (int) right;
     }
 }
