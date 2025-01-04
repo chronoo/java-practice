@@ -5,11 +5,18 @@ package t;
  */
 public class FindSmallestLetterGreaterThanTarget {
     public char nextGreatestLetter(char[] letters, char target) {
-        for (var i = 1; i < letters.length; i++) {
-            var cur = letters[i];
-            var prev = letters[i - 1];
-            if (prev <= target && cur > target) return cur;
+        var left = 0;
+        var right = letters.length - 1;
+        var ans = 0;
+        while (left <= right) {
+            var middle = left + (right - left) / 2;
+            if (letters[middle] > target) {
+                right = middle - 1;
+                ans = middle;
+            } else {
+                left = middle + 1;
+            }
         }
-        return letters[0];
+        return letters[ans];
     }
 }
