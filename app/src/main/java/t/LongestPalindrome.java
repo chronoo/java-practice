@@ -5,16 +5,14 @@ package t;
  */
 public class LongestPalindrome {
     public int longestPalindrome(String s) {
-        var freq = new int[100];
+        var freq = new int[128];
         for (var c : s.toCharArray()) {
-            freq[c - 'A']++;
+            freq[c]++;
         }
         var count = 0;
-        var hasOdd = false;
         for (var fr : freq) {
-            if (fr >= 2) count += fr - fr % 2;
-            hasOdd = hasOdd || fr % 2 == 1;
+            count += (fr / 2) * 2;
         }
-        return count + (hasOdd ? 1 : 0);
+        return count < s.length() ? ++count : count;
     }
 }
