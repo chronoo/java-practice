@@ -1,19 +1,12 @@
 package t;
 
+import java.util.Arrays;
+
 /**
  * https://leetcode.com/problems/final-value-of-variable-after-performing-operations
  */
 public class FinalValueOfVariableAfterPerformingOperations {
     public int finalValueAfterOperations(String[] operations) {
-        var res = 0;
-        for (String operation : operations) {
-            switch (operation) {
-                case "--X" -> --res;
-                case "X--" -> res--;
-                case "++X" -> ++res;
-                case "X++" -> res++;
-            }
-        }
-        return res;
+        return Arrays.stream(operations).mapToInt(x -> 44 - x.charAt(1)).sum();
     }
 }
