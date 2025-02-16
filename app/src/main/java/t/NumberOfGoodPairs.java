@@ -5,14 +5,12 @@ package t;
  */
 public class NumberOfGoodPairs {
     public int numIdenticalPairs(int[] nums) {
-        var count = 0;
-        for (var i = 0; i < nums.length; i++) {
-            var first = nums[i];
-            for (var j = i + 1; j < nums.length; j++) {
-                var second = nums[j];
-                if (first == second) count++;
-            }
+        var counts = new int[101];
+        var res = 0;
+        for (var num : nums) {
+            res += counts[num];
+            counts[num]++;
         }
-        return count;
+        return res;
     }
 }
