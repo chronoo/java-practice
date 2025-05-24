@@ -2,7 +2,7 @@ package t
 
 object CountSymmetricIntegers {
   def countSymmetricIntegers(low: Int, high: Int): Int =
-    (low to high).count(symmetric)
+    low to high count symmetric
 
   private def symmetric(x: Int): Boolean = {
     val str = x.toString.toCharArray
