@@ -8,9 +8,9 @@ object ReplaceAllDigitsWithCharacters {
 
   def replaceDigits(s: List[Char]): List[Char] =
     s match {
-      case a if a.length <= 1 => a
-      case a :: b :: c if a.isLetter && b.isDigit => List(a).appended((a + b - '0').toChar).appendedAll(replaceDigits(c))
-      case head :: tail => replaceDigits(tail)
       case Nil => List()
+      case a :: Nil => List(a)
+      case first :: second :: tail if first.isLetter && second.isDigit => List(first) :+ (first + second - '0').toChar appendedAll replaceDigits(tail)
+      case head :: tail => replaceDigits(tail)
     }
 }
