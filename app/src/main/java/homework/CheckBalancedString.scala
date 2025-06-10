@@ -5,5 +5,11 @@ package homework
  */
 object CheckBalancedString {
   def isBalanced(num: String): Boolean =
-    num.zipWithIndex.filter((x, y) => y % 2 == 1).map((x, _) => x - '0').sum == num.zipWithIndex.filter((x, y) => y % 2 == 0).map((x, _) => x - '0').sum
+    num.toCharArray.zipWithIndex.map {
+      (value, idx) => if (idx % 2 == 0) value.asNum else -value.asNum
+    }.sum == 0
+
+  implicit class CharNum(c: Char) {
+    def asNum: Int = c - '0'
+  }
 }
